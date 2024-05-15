@@ -7,10 +7,10 @@
 
 ## Start Diameter Server with TLS
 ```bash
- go run server/server.go -cert_file="server.crt" -key_file="server.key"  
+ go run server/server.go -network="sctp" -cert_file="server.crt" -key_file="server.key"  
  ```
 
  ## Start Diameter Server without TLS
  ```bash
-  go run server/server.go 
+  go run server/server.go -network="sctp"
   ```

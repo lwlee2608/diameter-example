@@ -21,6 +21,7 @@ func main() {
 	certFile := flag.String("cert_file", "", "tls certificate file (optional)")
 	keyFile := flag.String("key_file", "", "tls key file (optional)")
 	silent := flag.Bool("s", false, "silent mode, useful for benchmarks")
+	network := flag.String("network", "tcp", "network type, 'tcp' or 'sctp'")
 	flag.Parse()
 
 	settings := &sm.Settings{
@@ -44,7 +45,7 @@ func main() {
 		go func() { log.Fatal(http.ListenAndServe(*ppaddr, nil)) }()
 	}
 
-	err := listen(*addr, *certFile, *keyFile, mux)
+	err := listen(*network, *addr, *certFile, *keyFile, mux)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -56,15 +57,14 @@ func printErrors(ec <-chan *diam.ErrorReport) {
 	}
 }
 
-func listen(addr, cert, key string, handler diam.Handler) error {
+func listen(network, addr, cert, key string, handler diam.Handler) error {
 	// Start listening for connections.
 	if len(cert) > 0 && len(key) > 0 {
-		log.Println("Starting secure diameter server on", addr)
-		return diam.ListenAndServeNetworkTLS("sctp", addr, cert, key, handler, nil)
+		log.Printf("Starting secure %s diameter server on %s", network, addr)
+		return diam.ListenAndServeNetworkTLS(network, addr, cert, key, handler, nil)
 	}
-	log.Println("Starting diameter server on", addr)
-	// return diam.ListenAndServeNetwork("tcp", addr, handler, nil)
-	return diam.ListenAndServeNetwork("sctp", addr, handler, nil)
+	log.Printf("Starting %s diameter server on %s", network, addr)
+	return diam.ListenAndServeNetwork(network, addr, handler, nil)
 }
 
 func handleCCR(silent bool) diam.HandlerFunc {
