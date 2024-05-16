@@ -4,3 +4,8 @@
 ```bash
 cargo run --bin server
  ```
+
+## Start Diameter Client
+```bash
+cargo run --bin client
+ ```
