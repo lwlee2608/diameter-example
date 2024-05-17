@@ -126,14 +126,14 @@ func sendCCR(c diam.Conn, cfg *sm.Settings) error {
 	m.NewAVP(avp.DestinationRealm, avp.Mbit, 0, meta.OriginRealm)
 	m.NewAVP(avp.DestinationHost, avp.Mbit, 0, meta.OriginHost)
 	m.NewAVP(avp.UserName, avp.Mbit, 0, datatype.UTF8String("foobar"))
-	log.Printf("Sending HMR to %s\n%s", c.RemoteAddr(), m)
+	log.Printf("Sending CCR to %s\n%s", c.RemoteAddr(), m)
 	_, err := m.WriteTo(c)
 	return err
 }
 
 func handleCCA(done chan struct{}) diam.HandlerFunc {
 	return func(c diam.Conn, m *diam.Message) {
-		log.Printf("Received HMA from %s\n%s", c.RemoteAddr(), m)
+		log.Printf("Received CCA from %s\n%s", c.RemoteAddr(), m)
 		close(done)
 	}
 }
