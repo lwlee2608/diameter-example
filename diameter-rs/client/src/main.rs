@@ -28,7 +28,7 @@ async fn main() {
 
     // Initialize a Diameter client and connect it to the server
     let client_config = DiameterClientConfig {
-        use_tls: false,
+        use_tls: true,
         verify_cert: false,
     };
     let mut client = DiameterClient::new("localhost:3868", client_config);
