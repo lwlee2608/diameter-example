@@ -1,11 +1,21 @@
 # Rust Diameter Example
 
-## Start Diameter Server
+Make sure you are in the correct directory
+```bash
+cd diameter-rs
+```
+
+Generate private key and cert
+```bash
+./gen_key.sh
+```
+
+## Start TLS Diameter Server
 ```bash
 cargo run --bin server
  ```
 
-## Start Diameter Client
+## Start TLS Diameter Client
 ```bash
 cargo run --bin client
  ```

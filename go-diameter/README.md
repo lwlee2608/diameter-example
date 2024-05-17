@@ -1,6 +1,11 @@
 # Go Diameter Example
 
-## Generate private key and cert
+Make sure you are in the correct directory
+```bash
+cd go-diameter
+```
+
+Generate private key and cert
 ```bash
 ./gen_key.sh
 ```
@@ -14,3 +19,8 @@
  ```bash
   go run server/server.go -network="sctp"
   ```
+
+## Start Diameter Client with TLS
+```bash
+ go run client/client.go -ssl
+ ```
